@@ -1,11 +1,14 @@
 package appewtc.masterung.neungapp;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,7 +18,8 @@ public class SignUpActivity extends AppCompatActivity {
     //Explicit
     private EditText nameEditText, surnameEditText, userEditText, passwordEditText;
     private ImageView imageView;
-    private String nameString, surnameString, userString, passwordString, imageString;
+    private String nameString, surnameString, userString,
+            passwordString, imageString, imagePathString, imageNameString;
     private boolean aBoolean = true;
 
     @Override
@@ -66,10 +70,34 @@ public class SignUpActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            //Find Path and Name of Image Cheesed
+            imagePathString = myFindPathImage(uri);
+            Log.d("NeungV1", "imagePathString ==> " + imagePathString);
+
 
         }   // if
 
     }   // onActivityResult
+
+    private String myFindPathImage(Uri uri) {
+
+        String strResult = null;
+        String[] strings = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, strings,
+                null, null, null);
+        if (cursor != null) {
+
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            strResult = cursor.getString(index);
+
+        } else {
+            strResult = uri.getPath();
+        }
+
+
+        return strResult;
+    }
 
     public void clickSignUpSign(View view) {
 
@@ -93,6 +121,7 @@ public class SignUpActivity extends AppCompatActivity {
             myAlert.myDialog();
         } else {
             //Choose Image Finish
+
         }
 
 
