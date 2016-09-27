@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Neung App</string>
-    
+
     <string name="signin">Sign In</string>
     <string name="signup">สมัครสมาชิก</string>
-    
+
 </resources>
