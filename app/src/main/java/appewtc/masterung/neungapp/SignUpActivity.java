@@ -1,5 +1,6 @@
 package appewtc.masterung.neungapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,8 +27,32 @@ public class SignUpActivity extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.editText4);
         imageView = (ImageView) findViewById(R.id.imageView);
 
+        //Image Controller
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "โปรดเลือกรูปภาพ"), 0);
+
+            }   // onClick
+        });
+
 
     }   // Main Method
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ((requestCode == 0) && (resultCode == RESULT_OK)) {
+
+            aBoolean = false;
+
+        }   // if
+
+    }   // onActivityResult
 
     public void clickSignUpSign(View view) {
 
