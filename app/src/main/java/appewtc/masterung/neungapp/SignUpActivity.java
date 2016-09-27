@@ -6,12 +6,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import org.jibble.simpleftp.SimpleFTP;
+
+import java.io.File;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -73,7 +79,8 @@ public class SignUpActivity extends AppCompatActivity {
             //Find Path and Name of Image Cheesed
             imagePathString = myFindPathImage(uri);
             Log.d("NeungV1", "imagePathString ==> " + imagePathString);
-
+            imageNameString = imagePathString.substring(imagePathString.lastIndexOf("/"));
+            Log.d("NeungV1", "imageNameString ==> " + imageNameString);
 
         }   // if
 
@@ -121,6 +128,7 @@ public class SignUpActivity extends AppCompatActivity {
             myAlert.myDialog();
         } else {
             //Choose Image Finish
+            uploadImageToServer();
 
         }
 
@@ -128,6 +136,31 @@ public class SignUpActivity extends AppCompatActivity {
 
     }   // clickSignUpSign
 
+    private void uploadImageToServer() {
+
+        //Change Policy
+        StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy
+                .Builder().permitAll().build();
+        StrictMode.setThreadPolicy(threadPolicy);
+
+        try {
+
+            SimpleFTP simpleFTP = new SimpleFTP();
+            simpleFTP.connect("ftp.swiftcodingthai.com", 21,
+                    "one@swiftcodingthai.com", "Abc12345");
+            simpleFTP.bin();
+            simpleFTP.cwd("Image");
+            simpleFTP.stor(new File(imagePathString));
+            simpleFTP.disconnect();
+
+            Toast.makeText(this, "Save Image Finish", Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }   // uploadImageToServer
 
 
 }   // Main Class
