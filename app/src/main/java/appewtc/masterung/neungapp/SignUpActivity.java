@@ -12,6 +12,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText nameEditText, surnameEditText, userEditText, passwordEditText;
     private ImageView imageView;
     private String nameString, surnameString, userString, passwordString, imageString;
+    private boolean aBoolean = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,13 @@ public class SignUpActivity extends AppCompatActivity {
             MyAlert myAlert = new MyAlert(this, "มีช่องว่าง",
                     "กรุณากรอกทุกช่อง ด้วยคะ");
             myAlert.myDialog();
+        } else if (aBoolean) {
+            //Non Choose Image
+            MyAlert myAlert = new MyAlert(this, "ยังไม่ได้เลือกรูป",
+                    "กรุณาคลิกที่รูปภาพ เพื่อเลื่อกรูป");
+            myAlert.myDialog();
+        } else {
+            //Choose Image Finish
         }
 
 
