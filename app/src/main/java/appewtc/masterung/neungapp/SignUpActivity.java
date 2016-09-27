@@ -1,8 +1,11 @@
 package appewtc.masterung.neungapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -49,6 +52,20 @@ public class SignUpActivity extends AppCompatActivity {
         if ((requestCode == 0) && (resultCode == RESULT_OK)) {
 
             aBoolean = false;
+
+            //Show Choose Image on ImageView
+            Uri uri = data.getData();
+            try {
+
+                Bitmap bitmap = BitmapFactory
+                        .decodeStream(getContentResolver()
+                                .openInputStream(uri));
+                imageView.setImageBitmap(bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         }   // if
 
